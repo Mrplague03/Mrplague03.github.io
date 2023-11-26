@@ -24,6 +24,7 @@ h1{
 }
 
 .night {
+  align-items: center;
   position: fixed;
   left: 50%;
   top: 0;
