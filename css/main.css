@@ -9,6 +9,11 @@
 :root {
   --dark-color: #000;
 }
+.centerd-div {
+  display: flex;
+  align-items: center;
+}
+
 
 body {
   display: flex;
