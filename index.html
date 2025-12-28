@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buna Amaliaaa<3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #e8dcc4 0%, #d4c5a9 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            transition: background 2s ease;
+        }
+
+        .parchment {
+            background: 
+                linear-gradient(rgba(245, 235, 220, 0.9), rgba(240, 230, 210, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+            box-shadow: 
+                0 0 0 1px rgba(139, 90, 43, 0.3),
+                0 10px 50px rgba(101, 67, 33, 0.3),
+                inset 0 0 30px rgba(139, 90, 43, 0.1);
+            border: 3px double #8b5a2b;
+        }
+
+        .gold-border {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, #d4af37, #f4e4c1, #d4af37) border-box;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .float-slow {
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        .float-fast {
+            animation: floating 2s ease-in-out infinite;
+        }
+
+        .ink-blot {
+            opacity: 0;
+            transform: scale(0.8);
+            animation: inkBlot 1s ease-out forwards;
+        }
+
+        @keyframes inkBlot {
+            0% { opacity: 0; transform: scale(0.8); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+            color: #4a2c2a;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .typewriter-font {
+            font-family: 'Special Elite', cursive;
+        }
+
+        .blur-screen {
+            filter: blur(20px);
+            transition: filter 0.5s ease;
+        }
+
+        .focused {
+            filter: blur(0px);
+        }
+
+        .heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            30% { transform: scale(1.15); }
+            40% { transform: scale(1); }
+        }
+
+        .pulse-ring {
+            animation: pulseRing 2s ease-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        .hand-sketch {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hand-sketch:hover {
+            transform: scale(1.05);
+        }
+
+        .clasp-animation {
+            animation: clasp 0.5s ease-out forwards;
+        }
+
+        @keyframes clasp {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(-5deg) scale(1.1); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .magnifier {
+            width: 120px;
+            height: 120px;
+            border: 4px solid #8b5a2b;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%);
+            backdrop-filter: blur(0px);
+            pointer-events: none;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+
+        .magnifier::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 6px;
+            background: #8b5a2b;
+            transform: translate(50%, -50%) rotate(45deg);
+            border-radius: 3px;
+        }
+
+        .hidden-reveal {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .revealed {
+            opacity: 1;
+        }
+
+        .sepia-mode {
+            filter: sepia(0.8) contrast(1.2);
+        }
+
+        .rose-gold-mode {
+            background: linear-gradient(135deg, #f4c2c2 0%, #e8b4b8 50%, #d4af7a 100%);
+        }
+
+        .prescription-card {
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transform: rotate(-1deg);
+        }
+
+        .stamp {
+            border: 3px solid #dc2626;
+            color: #dc2626;
+            padding: 8px 16px;
+            transform: rotate(-5deg);
+            font-weight: bold;
+            display: inline-block;
+            opacity: 0.8;
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stethoscope-cursor {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="%234a2c2a" stroke-width="2"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"></path><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"></path><circle cx="20" cy="10" r="2"></circle></svg>') 16 16, auto;
+        }
+
+        .progress-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(245, 235, 220, 0.95);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #8b5a2b;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .step-complete {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .step-incomplete {
+            color: #94a3b8;
+        }
+
+        @media (max-width: 768px) {
+            .progress-indicator {
+                top: 10px;
+                right: 10px;
+                padding: 10px;
+                font-size: 0.9em;
+            }
+        }
+
+        .ornament {
+            width: 100%;
+            height: 30px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%238b5a2b" stroke-width="0.5" fill="none"/><path d="M0 5 Q25 10 50 5 T100 5" stroke="%238b5a2b" stroke-width="0.5" fill="none"/></svg>');
+            background-repeat: repeat-x;
+            background-position: center;
+            opacity: 0.6;
+        }
+
+        @keyframes scentFloat {
+            0% { opacity: 1; transform: translateY(0) scale(0.5); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="progress-indicator">
+        <div class="text-sm serif-title mb-2">Your Journey:</div>
+        <div id="step1" class="step-incomplete text-xs">○ Vital Signs</div>
+        <div id="step2" class="step-incomplete text-xs">○ Lavender</div>
+        <div id="step3" class="step-incomplete text-xs">○ Chemistry</div>
+        <div id="step4" class="step-incomplete text-xs">○ X-Ray Vision</div>
+        <div id="step5" class="step-incomplete text-xs">○ Prescription</div>
+    </div>
+
+    <div class="min-h-screen p-4 md:p-8" id="mainContainer">
+        <!-- Step 1: Vital Signs Entrance -->
+        <div id="entrance" class="max-w-4xl mx-auto blur-screen stethoscope-cursor">
+            <div class="text-center mb-12 floating">
+                <h1 class="text-5xl md:text-7xl serif-title mb-4">Buna Amaliaa</h1>
+                <div class="ornament mb-4"></div>
+        
+            </div>
+
+            <div class="parchment p-8 md:p-12 rounded-lg mb-8">
+                <h2 class="text-3xl serif-title text-center mb-6">Patient Chart: Introduction</h2>
+                <div class="ornament mb-6"></div>
+                <p class="text-lg mb-4 text-gray-800 leading-relaxed">
+                    Dear Amalia,
+                </p>
+                <p class="text-lg mb-4 text-gray-800 leading-relaxed">
+                    Before you lies an unusual case study. The subject: a   heart that has traveled 1,500 kilometers—from the harissa lands of Tunisia to find its rhythm in the vampire lands of Romania.
+                </p>
+                <p class="text-lg text-gray-800 leading-relaxed mb-6">
+                    Use your diagnostic skills. Move the stethoscope across this little surprise to begin your examination:))
+                </p>
+                <div class="text-center">
+                    <div id="heartPulse" class="inline-block text-6xl heartbeat opacity-0">❤️</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Scent & Memory (Lavender) -->
+        <div id="lavenderSection" class="parchment p-8 md:p-12 rounded-lg mb-8 max-w-4xl mx-auto" style="opacity: 0; transform: translateY(50px); transition: opacity 1s ease, transform 1s ease;">
+            <h2 class="text-3xl serif-title text-center mb-6">Aromatherapy Study</h2>
+            <div class="ornament mb-6"></div>
+            <p class="text-lg text-center mb-8 text-gray-800 italic">"Scent & Memory: The neuroscience of comfort..."</p>
+            
+            <div class="flex flex-col items-center">
+                <p class="text-lg mb-6 text-gray-800">Rub the lavender sprig to release its fragrance...</p>
+                <div id="lavenderSprig" class="relative cursor-pointer select-none" style="touch-action: none;">
+                    <svg width="200" height="280" viewBox="0 0 200 280" class="float-slow">
+                        <defs>
+                            <linearGradient id="lavenderGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#9b87f5;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#7c5cdb;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <g id="lavenderPlant">
+                            <!-- Stem -->
+                            <path d="M100 250 Q98 200 100 150 Q102 100 100 50" 
+                                  stroke="#5a7c4e" 
+                                  stroke-width="4" 
+                                  fill="none" 
+                                  stroke-linecap="round"/>
+                            
+                            <!-- Leaves -->
+                            <path d="M100 180 Q85 175 78 180 Q75 182 78 185 Q85 190 100 185" 
+                                  fill="#6b8f5e" opacity="0.8"/>
+                            <path d="M100 180 Q115 175 122 180 Q125 182 122 185 Q115 190 100 185" 
+                                  fill="#6b8f5e" opacity="0.8"/>
+                            
+                            <path d="M100 150 Q82 145 75 150 Q72 152 75 155 Q82 160 100 155" 
+                                  fill="#6b8f5e" opacity="0.8"/>
+                            <path d="M100 150 Q118 145 125 150 Q128 152 125 155 Q118 160 100 155" 
+                                  fill="#6b8f5e" opacity="0.8"/>
+                            
+                            <path d="M100 120 Q80 115 73 120 Q70 122 73 125 Q80 130 100 125" 
+                                  fill="#6b8f5e" opacity="0.8"/>
+                            <path d="M100 120 Q120 115 127 120 Q130 122 127 125 Q120 130 100 125" 
+                                  fill="#6b8f5e" opacity="0.8"/>
+                            
+                            <!-- Lavender flowers -->
+                            <ellipse cx="100" cy="45" rx="12" ry="15" fill="url(#lavenderGradient)"/>
+                            <ellipse cx="100" cy="35" rx="11" ry="13" fill="url(#lavenderGradient)"/>
+                            <ellipse cx="100" cy="25" rx="10" ry="11" fill="url(#lavenderGradient)"/>
+                            <ellipse cx="100" cy="17" rx="8" ry="9" fill="url(#lavenderGradient)"/>
+                            
+                            <!-- Flower details -->
+                            <circle cx="95" cy="45" r="2" fill="#e9d5ff" opacity="0.6"/>
+                            <circle cx="105" cy="45" r="2" fill="#e9d5ff" opacity="0.6"/>
+                            <circle cx="100" cy="40" r="2" fill="#e9d5ff" opacity="0.6"/>
+                            <circle cx="97" cy="35" r="2" fill="#e9d5ff" opacity="0.6"/>
+                            <circle cx="103" cy="35" r="2" fill="#e9d5ff" opacity="0.6"/>
+                            <circle cx="98" cy="25" r="1.5" fill="#e9d5ff" opacity="0.6"/>
+                            <circle cx="102" cy="25" r="1.5" fill="#e9d5ff" opacity="0.6"/>
+                        </g>
+                    </svg>
+                    <div id="scentParticles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+                </div>
+                <div id="lavenderMessage" class="hidden-reveal mt-8 max-w-md text-center">
+                    <p class="text-2xl serif-title text-purple-900 italic p-6 gold-border rounded-lg bg-purple-50">
+                        "You love the peace that lavender brings, and I love the peace that you bring. You are the only remedy I’ll ever need"
+                    </p>
+                    <p class="text-sm text-gray-600 mt-4 typewriter-font">
+                        <span class="font-semibold">Anxiolytic properties:</span> 100% effective when you're around.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Dopamine Slider -->
+        <div id="dopamineSection" class="parchment p-8 md:p-12 rounded-lg mb-8 max-w-4xl mx-auto" style="opacity: 0; transform: translateY(50px); transition: opacity 1s ease, transform 1s ease;">
+            <h2 class="text-3xl serif-title text-center mb-6">Chemical Analysis</h2>
+            <div class="ornament mb-6"></div>
+            <p class="text-lg text-center mb-8 text-gray-800 italic">"Are you the neurotransmitter of joy and reward?"</p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                <div class="text-center floating">
+                    <svg width="120" height="180" viewBox="0 0 120 180">
+                        <g stroke="#4a2c2a" stroke-width="2" fill="none">
+                            <!-- Beaker -->
+                            <rect x="30" y="40" width="60" height="100" rx="2" />
+                            <path d="M25 40 L35 20 L85 20 L95 40" fill="#f5f5dc" />
+                            <line x1="35" y1="20" x2="35" y2="15" />
+                            <line x1="85" y1="20" x2="85" y2="15" />
+                            <!-- Liquid -->
+                            <rect x="32" y="80" width="56" height="58" fill="#fecaca" opacity="0.6" id="dopamineLevel" />
+                            <!-- Measurements -->
+                            <line x1="25" y1="60" x2="30" y2="60" />
+                            <line x1="25" y1="80" x2="30" y2="80" />
+                            <line x1="25" y1="100" x2="30" y2="100" />
+                            <line x1="25" y1="120" x2="30" y2="120" />
+                        </g>
+                    </svg>
+                    <p class="text-sm typewriter-font mt-2">C₈H₁₁NO₂</p>
+                    <p class="text-xs text-gray-600">Dopamine</p>
+                </div>
+                
+                <div class="flex flex-col items-center gap-4">
+                    <p class="text-lg text-gray-800">Adjust the concentration:</p>
+                    <input 
+                        type="range" 
+                        id="dopamineSlider" 
+                        min="0" 
+                        max="100" 
+                        value="0" 
+                        class="w-64 h-3 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                        style="accent-color: #f06969;"
+                    />
+                    <p class="text-sm text-gray-600 italic">
+                        "Watch how you bring color to my world..."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: X-Ray -->
+        <div id="xraySection" class="parchment p-8 md:p-12 rounded-lg mb-8 max-w-4xl mx-auto" style="opacity: 0; transform: translateY(50px); transition: opacity 1s ease, transform 1s ease;">
+            <h2 class="text-3xl serif-title text-center mb-6">Radiological Examination</h2>
+            <div class="ornament mb-6"></div>
+            <p class="text-lg text-center mb-8 text-gray-800 italic">"What lies beneath the surface..."</p>
+            
+            <div class="relative flex justify-center overflow-visible" id="xrayContainer" style="min-height: 450px; cursor: none;">
+                <svg width="350" height="450" viewBox="0 0 350 450" class="floating" style="filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));">
+                    <defs>
+                        <filter id="xrayGlow">
+                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    
+                    <g stroke="#4a2c2a" stroke-width="2.5" fill="none" opacity="0.9">
+                        <!-- Spine/Sternum -->
+                        <line x1="175" y1="80" x2="175" y2="320" stroke-width="4" opacity="0.7" />
+                        <ellipse cx="175" cy="85" rx="8" ry="6" fill="#4a2c2a" opacity="0.3" />
+                        <ellipse cx="175" cy="110" rx="8" ry="6" fill="#4a2c2a" opacity="0.3" />
+                        <ellipse cx="175" cy="135" rx="8" ry="6" fill="#4a2c2a" opacity="0.3" />
+                        <ellipse cx="175" cy="160" rx="8" ry="6" fill="#4a2c2a" opacity="0.3" />
+                        <ellipse cx="175" cy="185" rx="8" ry="6" fill="#4a2c2a" opacity="0.3" />
+                        <ellipse cx="175" cy="210" rx="8" ry="6" fill="#4a2c2a" opacity="0.3" />
+                        
+                        <!-- Clavicles (Collarbones) -->
+                        <path d="M175 85 Q150 75 120 80" stroke-width="3" />
+                        <path d="M175 85 Q200 75 230 80" stroke-width="3" />
+                        
+                        <!-- Ribcage - Left Side -->
+                        <path d="M175 100 Q140 95 110 105 Q90 115 85 135 Q82 150 90 165" />
+                        <path d="M175 120 Q145 115 115 125 Q95 135 90 155 Q87 170 95 185" />
+                        <path d="M175 140 Q150 135 120 145 Q100 155 95 175 Q92 190 100 205" />
+                        <path d="M175 160 Q155 155 125 165 Q105 175 100 195 Q97 210 105 225" />
+                        <path d="M175 180 Q160 175 130 185 Q110 195 105 215 Q102 230 110 245" />
+                        <path d="M175 200 Q165 195 135 205 Q115 215 110 235 Q108 250 118 265" />
+                        <path d="M175 220 Q170 215 145 225 Q125 235 125 255 Q125 265 135 275" />
+                        
+                        <!-- Ribcage - Right Side -->
+                        <path d="M175 100 Q210 95 240 105 Q260 115 265 135 Q268 150 260 165" />
+                        <path d="M175 120 Q205 115 235 125 Q255 135 260 155 Q263 170 255 185" />
+                        <path d="M175 140 Q200 135 230 145 Q250 155 255 175 Q258 190 250 205" />
+                        <path d="M175 160 Q195 155 225 165 Q245 175 250 195 Q253 210 245 225" />
+                        <path d="M175 180 Q190 175 220 185 Q240 195 245 215 Q248 230 240 245" />
+                        <path d="M175 200 Q185 195 215 205 Q235 215 240 235 Q242 250 232 265" />
+                        <path d="M175 220 Q180 215 205 225 Q225 235 225 255 Q225 265 215 275" />
+                        
+                        <!-- Lower costal cartilage -->
+                        <path d="M135 275 Q155 285 175 287" stroke-width="2" opacity="0.6" stroke-dasharray="3,3" />
+                        <path d="M215 275 Q195 285 175 287" stroke-width="2" opacity="0.6" stroke-dasharray="3,3" />
+                        
+                        <!-- Hidden heart area -->
+                        <g id="heartReveal" opacity="0">
+                            <!-- Anatomical heart shape -->
+                            <path d="M175 150 
+                                     Q165 140 155 145 
+                                     Q145 150 145 160 
+                                     Q145 175 175 200 
+                                     Q205 175 205 160 
+                                     Q205 150 195 145 
+                                     Q185 140 175 150 Z" 
+                                  fill="#ff1493" 
+                                  opacity="0.9" 
+                                  stroke="#ff69b4" 
+                                  stroke-width="2"
+                                  filter="url(#xrayGlow)" />
+                            
+                            <!-- Pulse lines -->
+                            <circle cx="175" cy="165" r="35" fill="none" stroke="#ff69b4" stroke-width="1" opacity="0.3" class="pulse-ring" />
+                            <circle cx="175" cy="165" r="35" fill="none" stroke="#ff69b4" stroke-width="1" opacity="0.3" class="pulse-ring" style="animation-delay: 0.5s;" />
+                            
+                            <text x="175" y="230" text-anchor="middle" fill="#4a2c2a" font-size="16" font-family="Crimson Text" font-weight="bold">
+                                <tspan x="175" dy="0">You are here</tspan>
+                               
+                            </text>
+                        </g>
+                    </g>
+                </svg>
+                <div id="magnifier" class="magnifier" style="display: none;"></div>
+            </div>
+
+        </div>
+
+        <!-- Step 5: Prescription -->
+        <div id="prescriptionSection" class="max-w-2xl mx-auto" style="opacity: 0; transform: translateY(50px); transition: opacity 1s ease, transform 1s ease;">
+            <div class="prescription-card p-8 md:p-12 rounded-lg gold-border">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 class="text-4xl serif-title text-gray-800">℞</h2>
+                        <p class="text-sm text-gray-600 mt-1">Prescription for the Heart</p>
+                    </div>
+                    <div class="stamp text-xs">
+                        URGENT
+                    </div>
+                </div>
+                
+                <div class="border-t-2 border-gray-300 pt-6 space-y-4 typewriter-font">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl serif-title text-gray-800 mb-2">PSYCHIATRIC EVALUATION</h3>
+                        <p class="text-sm text-gray-600">Department of Cardio-Romantic Medicine</p>
+                    </div>
+                    
+                    <div class="flex">
+                        <span class="w-40 font-semibold">Patient Name:</span>
+                        <span>Amalia Ciubotaru</span>
+                    </div>
+                    <div class="flex">
+                        <span class="w-40 font-semibold">Date of Exam:</span>
+                        <span id="currentDate"></span>
+                    </div>
+                    <div class="flex">
+                        <span class="w-40 font-semibold">Chief Complaint:</span>
+                        <span>Severe Long-Distance Syndrome (LDS)</span>
+                    </div>
+                    
+                    <div class="border-t border-gray-300 pt-4 mt-4">
+                        <p class="font-semibold mb-2">MENTAL STATUS EXAMINATION:</p>
+                        <div class="pl-4 space-y-2 text-sm">
+                            <p><span class="font-semibold">Appearance:</span> Beyond beautiful, both inside out</p>
+                            <p><span class="font-semibold">Behavior:</span> Exhibits symptoms of being the most amazing person I've ever met</p>
+                            <p><span class="font-semibold">Mood:</span> Brings joy to every interaction</p>
+                            <p><span class="font-semibold">Affect:</span> Contagiously positive, induces constant smiling in observer</p>
+                            <p><span class="font-semibold">Thought Process:</span> Brilliant, especially for a future healer of hearts</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-300 pt-4 mt-4">
+                        <p class="font-semibold mb-2">DIAGNOSIS:</p>
+                        <p class="pl-4 text-sm">Acute-on-chronic case of being absolutely perfect.<br> Prognosis: Excellent for long-term partnership.</p>
+                    </div>
+                    
+                    <div class="border-t border-gray-300 pt-4 mt-4">
+                        <p class="font-semibold mb-2">TREATMENT PLAN:</p>
+                        <div class="pl-4 space-y-2 text-sm">
+                            <p><span class="font-semibold">Medication:</span> Daily doses of "Thoughts of You" (unlimited refills)</p>
+                            <p><span class="font-semibold">Therapy:</span> Continuous long-distance conversations, shared dreams, video calls</p>
+                            <p><span class="font-semibold">Duration:</span> Lifetime (non-negotiable)</p>
+                            <p><span class="font-semibold">Side Effects:</span> May cause excessive daydreaming, heart palpitations, and uncontrollable smiling</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-300 pt-4 mt-4">
+                        <p class="font-semibold mb-2 text-red-800">CLINICAL RECOMMENDATION:</p>
+                        <p class="pl-4 text-sm font-semibold">Start long-term relationship immediately. No other treatment option available or desired.</p>
+                    </div>
+                </div>
+                
+
+                
+                <div class="border-t-2 border-gray-300 mt-8 pt-6">
+                    <p class="text-sm text-gray-600 mb-2 typewriter-font">Attending Physician's Final Note:</p>
+                    <p class="text-2xl serif-title text-center my-8 text-gray-800">
+                     
+                        <span class="text-3xl text-red-800"> I want be your Boyfriend</span>
+                    </p>
+                    
+                    <div class="flex justify-center gap-6 mt-8 flex-wrap">
+                        <button id="yesButton" class="px-10 py-4 bg-red-600 text-white text-xl serif-title rounded-lg hover:bg-red-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
+                            Yes
+                        </button>
+                        <button id="noButton" class="px-10 py-4 bg-gray-400 text-white text-xl serif-title rounded-lg transition-all shadow-lg" style="position: relative;">
+                            No
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        const state = {
+            step1: false,
+            step2: false,
+            step3: false,
+            step4: false,
+            step5: false,
+            focusProgress: 0
+        };
+
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Step 1: Vital Signs - Stethoscope interaction
+        const entrance = document.getElementById('entrance');
+        const heartPulse = document.getElementById('heartPulse');
+        let mouseMoving = false;
+
+        function handleMouseMove(e) {
+            if (!state.step1) {
+                mouseMoving = true;
+                state.focusProgress += 2;
+                
+                if (state.focusProgress >= 100) {
+                    entrance.classList.remove('blur-screen');
+                    entrance.classList.add('focused');
+                    heartPulse.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        state.step1 = true;
+                        updateProgress(1);
+                        setTimeout(() => {
+                            showNextSection('lavenderSection');
+                        }, 5000);
+                    }, 1000);
+                } else {
+                    entrance.style.filter = `blur(${20 - (state.focusProgress * 0.2)}px)`;
+                    heartPulse.style.opacity = state.focusProgress / 100;
+                }
+            }
+        }
+
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            handleMouseMove(touch);
+        });
+
+        // Step 2: Lavender Scent Interaction
+        const lavenderSprig = document.getElementById('lavenderSprig');
+        const lavenderMessage = document.getElementById('lavenderMessage');
+        const scentParticles = document.getElementById('scentParticles');
+        let rubCount = 0;
+        let lastX = 0;
+        let lastY = 0;
+        let isRubbing = false;
+
+        function createScentParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.textContent = '🪻';
+            particle.style.position = 'absolute';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.fontSize = '20px';
+            particle.style.pointerEvents = 'none';
+            particle.style.animation = 'scentFloat 2s ease-out forwards';
+            scentParticles.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 2000);
+        }
+
+        function handleLavenderRub(e) {
+            if (state.step2) return;
+            
+            const rect = lavenderSprig.getBoundingClientRect();
+            const clientX = e.clientX !== undefined ? e.clientX : e.touches[0].clientX;
+            const clientY = e.clientY !== undefined ? e.clientY : e.touches[0].clientY;
+            
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+            
+            if (isRubbing) {
+                const distance = Math.sqrt(Math.pow(x - lastX, 2) + Math.pow(y - lastY, 2));
+                
+                if (distance > 10) {
+                    rubCount++;
+                    createScentParticle(x, y);
+                    
+                    if (rubCount >= 15) {
+                        lavenderMessage.classList.remove('hidden-reveal');
+                        lavenderMessage.classList.add('revealed', 'fade-in');
+                        
+                        setTimeout(() => {
+                            state.step2 = true;
+                            updateProgress(2);
+                            setTimeout(() => {
+                                showNextSection('dopamineSection');
+                            }, 5000);
+                        }, 2000);
+                    }
+                }
+            }
+            
+            lastX = x;
+            lastY = y;
+        }
+
+        lavenderSprig.addEventListener('mousedown', () => { isRubbing = true; });
+        lavenderSprig.addEventListener('touchstart', () => { isRubbing = true; });
+        
+        lavenderSprig.addEventListener('mousemove', handleLavenderRub);
+        lavenderSprig.addEventListener('touchmove', handleLavenderRub);
+        
+        document.addEventListener('mouseup', () => { isRubbing = false; });
+        document.addEventListener('touchend', () => { isRubbing = false; });
+
+        // Step 3: Dopamine Slider
+        const dopamineSlider = document.getElementById('dopamineSlider');
+        const dopamineLevel = document.getElementById('dopamineLevel');
+        const body = document.body;
+
+        dopamineSlider.addEventListener('input', (e) => {
+            const value = e.target.value;
+            
+            // Change liquid level
+            const height = 58 * (value / 100);
+            const yPos = 138 - height;
+            dopamineLevel.setAttribute('y', yPos);
+            dopamineLevel.setAttribute('height', height);
+            
+            // Change background color
+            if (value > 80 && !state.step3) {
+                body.classList.add('rose-gold-mode');
+                state.step3 = true;
+                updateProgress(3);
+                setTimeout(() => {
+                    setTimeout(() => {
+                        showNextSection('xraySection');
+                    }, 5000);
+                }, 1000);
+            }
+        });
+
+        // Step 4: X-Ray Magnifier
+        const xrayContainer = document.getElementById('xrayContainer');
+        const magnifier = document.getElementById('magnifier');
+        const heartReveal = document.getElementById('heartReveal');
+        let isOverChest = false;
+        let hasCompletedXray = false;
+
+        function handleMagnifier(e) {
+            if (hasCompletedXray) return;
+            
+            e.preventDefault();
+            magnifier.style.display = 'block';
+            
+            const rect = xrayContainer.getBoundingClientRect();
+            const clientX = e.clientX !== undefined ? e.clientX : e.touches[0].clientX;
+            const clientY = e.clientY !== undefined ? e.clientY : e.touches[0].clientY;
+            
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+            
+            magnifier.style.left = x + 'px';
+            magnifier.style.top = y + 'px';
+            
+            // Check if over chest area
+            const centerX = 175;
+            const centerY = 180;
+            
+            const svgX = (x / rect.width) * 350;
+            const svgY = (y / rect.height) * 450;
+            
+            const distance = Math.sqrt(Math.pow(svgX - centerX, 2) + Math.pow(svgY - centerY, 2));
+            
+            if (distance < 70 && !isOverChest) {
+                isOverChest = true;
+                heartReveal.style.opacity = '1';
+                heartReveal.style.transition = 'opacity 1.5s ease';
+                
+                setTimeout(() => {
+                    if (!hasCompletedXray) {
+                        hasCompletedXray = true;
+                        state.step4 = true;
+                        updateProgress(4);
+                        setTimeout(() => {
+                            setTimeout(() => {
+                                showNextSection('prescriptionSection');
+                            }, 5000);
+                        }, 1500);
+                    }
+                }, 1500);
+            }
+        }
+
+        xrayContainer.addEventListener('mousemove', handleMagnifier);
+        xrayContainer.addEventListener('touchmove', handleMagnifier);
+        
+        xrayContainer.addEventListener('mouseleave', () => {
+            if (!hasCompletedXray) {
+                magnifier.style.display = 'none';
+            }
+        });
+        
+        xrayContainer.addEventListener('touchend', () => {
+            if (!hasCompletedXray) {
+                setTimeout(() => {
+                    magnifier.style.display = 'none';
+                }, 100);
+            }
+        });
+
+        // Helper functions
+        function updateProgress(step) {
+            document.getElementById(`step${step}`).classList.remove('step-incomplete');
+            document.getElementById(`step${step}`).classList.add('step-complete');
+            document.getElementById(`step${step}`).textContent = `✓ ${document.getElementById(`step${step}`).textContent.substring(2)}`;
+        }
+
+        function showNextSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+            
+            // Smooth scroll to the section after a brief delay
+            setTimeout(() => {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+            }, 300);
+        }
+
+        // Yes/No Button Logic
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+
+        yesButton.addEventListener('click', () => {
+            // Confetti with hearts and petals
+            const duration = 3000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                
+                // Hearts
+                confetti({
+                    ...defaults,
+                    particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    shapes: ['circle'],
+                    colors: ['#ff69b4', '#ff1493', '#ff69b4', '#dc143c']
+                });
+                
+                // Rose petals
+                confetti({
+                    ...defaults,
+                    particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    shapes: ['square'],
+                    colors: ['#f4c2c2', '#e8b4b8', '#ffb6c1', '#ffc0cb']
+                });
+            }, 250);
+
+            yesButton.textContent = ' Pupiciii 🥰';
+            yesButton.classList.add('heartbeat');
+            noButton.style.display = 'none';
+            
+            state.step5 = true;
+            updateProgress(5);
+        });
+
+        // No button dodging
+        noButton.addEventListener('mouseenter', dodgeNoButton);
+        noButton.addEventListener('touchstart', dodgeNoButton);
+
+       function dodgeNoButton(e) {
+    e.preventDefault();
+
+    const rect = noButton.getBoundingClientRect();
+
+    
+    const pointX = e.touches ? e.touches[0].clientX : e.clientX;
+    const pointY = e.touches ? e.touches[0].clientY : e.clientY;
+
+ 
+    let dx = rect.left + rect.width / 2 - pointX;
+    let dy = rect.top + rect.height / 2 - pointY;
+
+    const distance = Math.hypot(dx, dy) || 1;
+
+ 
+    dx /= distance;
+    dy /= distance;
+
+  
+    const minMove = 18;     
+    const maxMove = 40;     
+
+    const force =
+        Math.min(maxMove, Math.max(minMove, 120 / distance * 20));
+
+    const moveX = dx * force;
+    const moveY = dy * force;
+
+    let targetX = rect.left + moveX;
+    let targetY = rect.top + moveY;
+
+   
+    const margin = 16;
+    const maxX = window.innerWidth - rect.width - margin;
+    const maxY = window.innerHeight - rect.height - margin;
+
+    targetX = Math.max(margin, Math.min(targetX, maxX));
+    targetY = Math.max(margin, Math.min(targetY, maxY));
+
+    noButton.style.position = 'fixed';
+    noButton.style.left = targetX + 'px';
+    noButton.style.top = targetY + 'px';
+
+
+    noButton.style.transition =
+        'left 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), ' +
+        'top 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), ' +
+        'transform 0.25s ease';
+
+    noButton.style.transform =
+        'rotate(' + (Math.random() * 4 - 2) + 'deg)';
+}
+
+
+        document.addEventListener('touchstart', function(e) {
+            if (e.target === noButton) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>
