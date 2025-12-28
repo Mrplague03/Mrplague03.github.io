@@ -919,6 +919,44 @@
                 e.preventDefault();
             }
         }, { passive: false });
+        //blur 
+        function progressFocus(amount) {
+    if (state.step1) return;
+
+    state.focusProgress = Math.min(100, state.focusProgress + amount);
+
+    entrance.style.filter = `blur(${20 - (state.focusProgress * 0.2)}px)`;
+    heartPulse.style.opacity = state.focusProgress / 100;
+
+    if (state.focusProgress >= 100) {
+        entrance.classList.remove('blur-screen');
+        entrance.classList.add('focused');
+        heartPulse.style.opacity = '1';
+
+        setTimeout(() => {
+            if (!state.step1) {
+                state.step1 = true;
+                updateProgress(1);
+
+                setTimeout(() => {
+                    showNextSection('lavenderSection');
+                }, 5000);
+            }
+        }, 1000);
+    }
+}
+setTimeout(() => {
+    if (!state.step1 && !mouseMoving) {
+        const autoInterval = setInterval(() => {
+            if (state.step1) {
+                clearInterval(autoInterval);
+                return;
+            }
+            progressFocus(2);
+        }, 50);
+    }
+}, 5000);
+
     </script>
 </body>
 </html>
